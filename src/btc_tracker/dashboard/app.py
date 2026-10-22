@@ -59,7 +59,7 @@ def _cutoff(days: int = WINDOW_DAYS) -> str:
     from datetime import timedelta
 
     return (_date.today() - timedelta(days=days)).isoformat()
-POLL_INTERVAL = int(os.getenv("DASHBOARD_POLL_INTERVAL", "60"))  # seconds
+POLL_INTERVAL = int(os.getenv("DASHBOARD_POLL_INTERVAL", "600"))  # seconds
 REFRESH_RETRIES = int(os.getenv("DASHBOARD_REFRESH_RETRIES", "2"))
 RETRY_BACKOFF = float(os.getenv("DASHBOARD_RETRY_BACKOFF", "5"))  # seconds
 PRICE_DAYS = int(os.getenv("DASHBOARD_PRICE_DAYS", "7"))
