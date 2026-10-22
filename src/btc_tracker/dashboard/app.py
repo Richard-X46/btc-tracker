@@ -72,6 +72,10 @@ LOCAL_DIR = Path(
 LOCAL_BLOCKS = LOCAL_DIR / "blocks.parquet"
 LOCAL_TX = LOCAL_DIR / "transaction_flat.parquet"
 ACTIVE = {"source": "databricks"}
+# Skip Databricks entirely for this long after a failure, so one wedged
+# connection can't pile up hanging threads and starve the server.
+DB_COOLDOWN = float(os.getenv("DASHBOARD_DB_COOLDOWN", "300"))
+_DB_DOWN_AT = 0.0
 
 # ---------------- time (Toronto-first) ----------------
 
@@ -157,7 +161,11 @@ def _need_local(local_sql: str | None) -> str:
 
 def _q(db_sql: str, local_sql: str | None) -> list[dict]:
     """Run db_sql on Databricks, falling back to local_sql via duckdb."""
+    global _DB_DOWN_AT
     if SOURCE == "local":
+        ACTIVE["source"] = "local-sample"
+        return _local_rows(_need_local(local_sql))
+    if time.monotonic() - _DB_DOWN_AT < DB_COOLDOWN:
         ACTIVE["source"] = "local-sample"
         return _local_rows(_need_local(local_sql))
     try:
@@ -165,6 +173,7 @@ def _q(db_sql: str, local_sql: str | None) -> list[dict]:
         ACTIVE["source"] = "databricks"
         return rows
     except Exception as exc:
+        _DB_DOWN_AT = time.monotonic()
         if SOURCE == "databricks":
             raise
         log.warning("databricks query failed, using local sample: %s", exc)
@@ -517,9 +526,10 @@ def cache_asof(key: str) -> float | None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # warm the cache once at startup, then poll in the background
-    for key in FETCHERS:
-        await asyncio.to_thread(_refresh_one, key)
+    # Startup must NEVER block on data: the poller refreshes immediately
+    # on its first iteration, and endpoints 503-until-warm by design.
+    # (Blocking warmup here kept uvicorn from accepting traffic while
+    # Databricks was unreachable, surfacing as empty responses.)
     task = asyncio.create_task(_poller())
     yield
     task.cancel()
