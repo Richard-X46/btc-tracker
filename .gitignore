@@ -8,9 +8,27 @@ __pycache__/
 
 #lockfiles
 *.lock
+# ...except the uv lockfile, which the Docker build needs for --frozen syncs
+!uv.lock
 
-# markdown files    
-notes.md
+# pycaches
+__pycache__/
+
+#data
+src/data
+src/notebooks/concepts
+
+# folders
+docs/
+
+# Teaching workspace (skill: mattpocock/skills@teach)
+MISSION.md
+NOTES.md
+RESOURCES.md
+lessons/
+reference/
+learning-records/
+assets/
 
 # Distribution / packaging
 .Python
@@ -178,3 +196,6 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+.DS_Store
+*.duckdb
+.venv/

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bitcoin On-Chain Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.4/dist/htmx.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js" defer></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    :root {
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a202c;
+      --muted: #718096;
+      --accent: #dd6b20;
+      --err: #c53030;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg); color: var(--text);
+      max-width: 1100px; margin: auto; padding: 24px 20px 48px;
+    }
+    .hero { border-left: 5px solid var(--accent); padding-left: 16px; margin-bottom: 6px; }
+    h1 { margin: 0 0 6px; font-size: 2rem; letter-spacing: -0.02em; }
+    h1 .accent { color: var(--accent); }
+    .eyebrow {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--accent); background: #fef3e8;
+      border: 1px solid #f5d9b8; border-radius: 999px;
+      padding: 3px 12px; margin-bottom: 10px;
+    }
+    .pulse { display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: #38a169; margin-right: 6px; }
+    .subtitle { color: var(--muted); max-width: 78ch; line-height: 1.55; margin: 8px 0 0; }
+    .subtitle code { color: var(--text); font-size: 0.9em; }
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px 18px; margin: 14px 0;
+      box-shadow: 0 1px 3px rgba(26, 32, 44, 0.08);
+    }
+    .card h3 { margin: 0 0 2px; font-size: 1.05rem; }
+    .caption { color: var(--muted); font-size: 13px; margin: 0 0 8px; }
+    .stats { font-size: 15px; }
+    .stats strong { font-size: 1.25em; font-variant-numeric: tabular-nums; }
+    .source { color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+    .source a { color: var(--accent); }
+    footer { color: var(--muted); font-size: 12.5px; margin-top: 20px;
+      border-top: 1px solid var(--border); padding-top: 12px; }
+    .plot { height: 440px; width: 100%; }
+    .err { color: var(--err); }
+    small { color: var(--muted); }
+    table { border-collapse: collapse; width: 100%; font-size: 14px; }
+    th, td { border-bottom: 1px solid var(--border); padding: 5px 8px; text-align: left; }
+    th { color: var(--muted); font-weight: 600; }
+    code { font-size: 0.9em; }
+    .dist-row { display: flex; align-items: center; gap: 8px; font-size: 13px; margin: 3px 0; }
+    .dist-row span:first-child { width: 92px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .dist-bar { height: 10px; background: var(--accent); border-radius: 5px; min-width: 2px; }
+    .dist { margin: 10px 0 4px; }
+    details { border: 1px solid var(--border); border-radius: 8px; margin: 8px 0; padding: 8px 12px; }
+    summary { cursor: pointer; font-weight: 600; }
+    summary small { font-weight: 400; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <span class="eyebrow"><span class="pulse"></span>Bitcoin mainnet · Databricks</span>
+    <h1>Bitcoin <span class="accent">On-Chain</span> Dashboard</h1>
+  </div>
+  <p class="source">Blocks and transactions: <a href="https://registry.opendata.aws/aws-public-blockchain/">AWS Public Blockchain Registry</a>, synced in incremental batches every 10 min on Databricks.</p>
+  <p class="subtitle">
+    Bitcoin <strong>on-chain data</strong> is activity recorded directly on the
+    blockchain: every block mined, every transaction, and the fee paid per
+    byte of block space. When blocks fill up, fees (measured in
+    <code>sat/vbyte</code>) rise, so block fullness and the fee market are a
+    live read on network demand. Large transfers (&gt; 1 BTC out, shown below
+    as "whales") often precede volatility.
+    Price candles come from the exchange market (Coinbase); everything else
+    comes from the Bitcoin blockchain itself, synced into Databricks.
+  </p>
+
+  <!-- htmx: server-rendered partials, refreshed every 60s -->
+  <div class="card stats" hx-get="/partials/headline" hx-trigger="load, every 60s">
+    loading headline…
+  </div>
+
+  <!-- alpine: fetch figure JSON, render with plotly, refresh every 60s -->
+  <div class="card" x-data="plotCard('/api/figures/price')" x-init="start()">
+    <h3>Price</h3>
+    <p class="caption">Daily close and volume for the last 7 days.</p>
+    <div class="plot" x-ref="plot">loading price…</div>
+    <template x-if="error"><p class="err" x-text="error"></p></template>
+  </div>
+
+  <div class="card" x-data="plotCard('/api/figures/pulse')" x-init="start()">
+    <h3>Price vs network pulse</h3>
+    <p class="caption">BTC price against transactions per hour and median fee rate over the last 7 days of data.</p>
+    <div class="plot" x-ref="plot">loading pulse…</div>
+    <template x-if="error"><p class="err" x-text="error"></p></template>
+  </div>
+
+  <div class="card" x-data="plotCard('/api/figures/fees')" x-init="start()">
+    <h3>Fee market</h3>
+    <p class="caption">What transactions paid per byte of block space over the last 7 days.</p>
+    <div class="plot" x-ref="plot">loading fees…</div>
+    <template x-if="error"><p class="err" x-text="error"></p></template>
+  </div>
+
+  <div class="card" x-data="plotCard('/api/figures/activity')" x-init="start()">
+    <h3>Chain activity</h3>
+    <p class="caption">Daily transaction count for the last 7 days.</p>
+    <div class="plot" x-ref="plot">loading activity…</div>
+    <template x-if="error"><p class="err" x-text="error"></p></template>
+  </div>
+
+  <!-- htmx: whale blocks partial -->
+  <div class="card">
+    <h3>Whale activity by block</h3>
+    <p class="caption">Transfers over 1 BTC out, grouped by block. Expand a block for its transactions.</p>
+    <div hx-get="/partials/whale-blocks" hx-trigger="load, every 60s">
+      loading…
+    </div>
+  </div>
+
+  <footer>Inspired by <a href="https://mempool.space">mempool.space</a>, the open-source Bitcoin block explorer for live mempool, fee, and block data. On-chain data synced from the Bitcoin blockchain via Databricks · price from Coinbase · times in Toronto (ET) unless marked UTC</footer>
+
+  <script>
+    // Plain-JS watchdog (no dependencies): if the CDN libraries failed to
+    // load, the cards would sit on "loading…" forever with no explanation.
+    // This replaces them with the actual cause.
+    setTimeout(function () {
+      var missing = [];
+      if (!window.htmx) missing.push('htmx');
+      if (!window.Alpine) missing.push('alpine.js');
+      if (!window.Plotly) missing.push('plotly.js');
+      if (!missing.length) return;
+      var msg = 'Could not load JS libraries (' + missing.join(', ') + '). ' +
+        'Check your connection/adblock, then hard-refresh (Cmd+Shift+R). ' +
+        'API status: <a href="/api/health">/api/health</a>';
+      document.querySelectorAll('.plot, [hx-get]').forEach(function (el) {
+        if (/loading/i.test(el.innerHTML)) el.innerHTML = '<span class=err>' + msg + '</span>';
+      });
+    }, 5000);
+    function plotCard(url) {
+      return {
+        error: null,
+        async load() {
+          try {
+            const r = await fetch(url);
+            const b = await r.json();
+            if (!r.ok) throw new Error(b.detail || r.status);
+            this.$refs.plot.innerHTML = '';
+            Plotly.newPlot(this.$refs.plot, b.figure, {}, { responsive: true });
+          } catch (e) {
+            this.error = String((e && e.message) || e);
+          }
+        },
+        start() {
+          this.load();
+          setInterval(() => this.load(), 60000);
+        }
+      };
+    }
+  </script>
+</body>
+</html>

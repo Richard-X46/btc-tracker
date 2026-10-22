@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+  - name: btc_data
+    database: workspace
+    schema: btc_data
+    tables:
+      - name: transactions
+      - name: blocks
+      

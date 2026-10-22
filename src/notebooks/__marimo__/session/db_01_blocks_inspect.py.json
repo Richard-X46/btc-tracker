@@ -1,0 +1,300 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.6",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "710da06a086722072cd37c5419130783",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>13</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "04c266dfe59b307fa647b96c7872b21f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "466cc343-0ff2-4b77-800a-297e20e364c1",
+      "code_hash": "1305febcae55a8d1b56df8fd7f15c41c",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='466cc343-0ff2-4b77-800a-297e20e364c1-0' random-id='c6c8237c-5f2e-182d-6bb4-26d7bdfcc290'><marimo-table data-initial-value='[]' data-label='null' data-data='[]' data-total-rows='0' data-total-columns='0' data-max-columns='50' data-banner-text='&quot;Previewing only the first 10 rows.&quot;' data-pagination='false' data-page-size='0' data-show-filters='true' data-show-download='true' data-show-column-summaries='false' data-show-data-types='true' data-show-page-size-selector='false' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-has-stable-row-id='false' data-lazy='true' data-preload='true'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "5aff087564ce979152ffe37e9985cab7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ef800439-cc81-4258-bc61-275b2b9d4bae",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "7b2fd930c284fc87c63769803cda80ba",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>175.36272</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "54e3b625257307e158db8a03698fdb77",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "aeccc739f3d6fb7560ff2398925732be",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "1b74533690f4b454216cf04c1048533f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "652b5309c25203b55916c2ec79b67e12",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "ba226f8f369572676c199ea91cbf9af7",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h2 id=\"fetching-block-tips\">Fetching Block Tips</h2></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "a6290730ab1e1bb12fc6b23b34e57309",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "8b12f5f9672242af4ef521b20e45afe0",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "emfo",
+      "code_hash": "e59ef26610e8f064709d38dde2cc8647",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "3d84a699440efe93b398b411ba529d27",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "a35107f79b02200b482e4ba15b757879",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+---------------+----------------+----------+---------------+\n|distinct_blocks|republished_rows|total_rows|pct_republished|\n+---------------+----------------+----------+---------------+\n|1617           |0               |1617      |0.00           |\n+---------------+----------------+----------+---------------+\n\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "iLit",
+      "code_hash": "bbfbb357aeabaa824613039b43860a4f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "ea455596b331b9cf7c9b5c1d18deadc5",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "670444bdb79af03ac8309d44e2487721",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "a1e80a5ac4343b783283b999553eb1cb",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "c4ca4238a0b923820dcc509a6f75849b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "bb7997409ab7ec0e4f094eb6843fb122",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h3 id=\"faster-scan-for-s3\">Faster Scan for s3</h3></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "DnEU",
+      "code_hash": "5f1f618e02d0842bfddb44f9cf4f701a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": "4788209ff812b1f7c839ab5e42ded599",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": "658b085a75ee765ad44801adb146612b",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "Pvdt",
+      "code_hash": "308c7beea8a21e6bc53c22e0e29c6946",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "ZBYS",
+      "code_hash": "12cbef5af1dc649bbda01410a22dc540",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "aLJB",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "nHfw",
+      "code_hash": "025541ba7bf9d6eca66b800475e6fc4a",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "xXTn",
+      "code_hash": "8922d3676a0b02ea09bd1817b9abd51f",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "AjVT",
+      "code_hash": "ed9e0b5e59f7b1bf49fcb0186ce01c19",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "pHFh",
+      "code_hash": "7d6214f96703f968d591a24c3b28ee07",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "NCOB",
+      "code_hash": "3e618ec9460194ce5ba7af1035e0f0fc",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "aqbW",
+      "code_hash": "fe33eae49137dc60e169e4b03e35eada",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TRpd",
+      "code_hash": "68264cc011591a33543e27b755382e14",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "TXez",
+      "code_hash": "a1cd104358d089e8ad3dd1fc2fdbd9ba",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "dNNg",
+      "code_hash": "5120005da21f38362363548f27beabc8",
+      "outputs": [],
+      "console": []
+    },
+    {
+      "id": "yCnT",
+      "code_hash": "c4ca4238a0b923820dcc509a6f75849b",
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

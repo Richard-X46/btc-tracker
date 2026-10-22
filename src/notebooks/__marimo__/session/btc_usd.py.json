@@ -1,0 +1,28 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.6",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "c4ca4238a0b923820dcc509a6f75849b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<pre class='text-xs'>1</pre>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "gdPP",
+      "code_hash": null,
+      "outputs": [],
+      "console": []
+    }
+  ]
+}

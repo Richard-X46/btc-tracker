@@ -1,0 +1,15 @@
+# dbt profile for btc_gold. Secrets come from the environment, never this file.
+# Required env vars:
+#   DATABRICKS_HOST       e.g. dbc-7cf9cb2d-15bd.cloud.databricks.com (no scheme)
+#   DATABRICKS_HTTP_PATH  e.g. /sql/1.0/warehouses/ffd32e8cc089ac87
+#   DATABRICKS_TOKEN      personal access token or OAuth token
+btc_gold:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      catalog: workspace
+      schema: btc_data
+      host: "{{ env_var('DATABRICKS_HOST') }}"
+      http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}"
+      token: "{{ env_var('DATABRICKS_TOKEN') }}"

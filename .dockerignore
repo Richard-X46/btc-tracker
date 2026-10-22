@@ -1,0 +1,22 @@
+# keep the image lean: nothing the app needs at runtime lives here
+.venv/
+.venv
+src/data/
+src/notebooks/
+src/bin/
+src/rough/
+.git/
+.gitignore
+**/__pycache__/
+**/*.egg-info/
+**/*.pyc
+btc_gold/target/
+btc_gold/logs/
+btc_gold/dbt_packages/
+resources/
+.env
+.DS_Store
+.vscode/
+notebooks/
+*.duckdb
+*.ipynb_checkpoints/

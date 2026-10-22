@@ -1,0 +1,23 @@
+bundle:
+  name: btc-tracker
+
+workspace:
+  # Prefer env (same as your .env / CLI auth)
+  host: https://dbc-7cf9cb2d-15bd.cloud.databricks.com
+
+include:
+  - resources/jobs/*.yml
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      profile: Richard
+  prod:
+    mode: production
+    workspace:
+      profile: btc-tracker-prod
+    run_as:
+      service_principal_name: 89c2bab4-6f5e-4cd1-9330-66952c9359f7
+

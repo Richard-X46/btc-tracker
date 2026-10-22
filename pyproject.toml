@@ -1,16 +1,48 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "btc-tracker"
 version = "0.1.0"
-description = "Add your description here"
+description = "BTC at-a-glance dashboard for historical and real-time market context"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "altair>=6.2.2",
+    "boto3>=1.43.65",
+    "databricks-connect>=18.3.1",
+    "dbt-databricks>=1.12.5",
+    "deltalake>=1.6.3",
+    "duckdb>=1.5.4",
     "fastapi[standard]>=0.115.12",
+    "ipykernel>=7.3.0",
+    "ipython>=9.15.0",
+    "jupytext>=1.19.4",
+    "logfire>=4.40.0",
+    "marimo>=0.23.6",
     "matplotlib>=3.10.3",
+    "mplfinance>=0.12.10b0",
     "nbformat>=5.10.4",
     "pip>=25.1.1",
     "plotly>=6.0.1",
-    "prefect>=3.4.2",
-    "psycopg2-binary>=2.9.10",
+    "polars>=1.42.0",
+    "pyarrow>=24.0.0",
+    "pydantic-ai>=2.27.1",
     "requests>=2.32.3",
+    "scikit-learn>=1.9.0",
+    "seaborn>=0.13.2",
+    "sqlglot>=30.17.0",
+    "ta-lib>=0.6.8",
+    "tensorflow>=2.21.0",
+    "tqdm>=4.67.1",
+    "vegafusion>=2.0.3",
+    "vl-convert-python>=1.9.0.post1",
+    "yfinance>=0.2.58",
 ]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
