@@ -35,10 +35,9 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          # Multi-arch: the VPS runs linux/arm64. The arm64 leg builds
-          # under QEMU emulation so first builds are slow; gha cache
-          # makes subsequent ones fast.
-          platforms: linux/amd64,linux/arm64
+          # Single arch: the VPS (only consumer) is arm64. amd64 leg removed.
+          # Still emulated on ubuntu-latest; native arm runner is the next step.
+          platforms: linux/arm64
           push: true
           tags: ghcr.io/richard-x46/btc-tracker:latest
           cache-from: type=gha

@@ -39,7 +39,11 @@ def build_pace(df, n: int = 120):
     if df is None or df.height == 0:
         raise ValueError("live_block_feed cache empty")
     p = df.tail(n).to_pandas()
-    p["timestamp"] = __import__("pandas").to_datetime(p["timestamp"])
+    import pandas as pd
+    ts = pd.to_datetime(p["timestamp"])
+    if ts.dt.tz is None:
+        ts = ts.dt.tz_localize("UTC")
+    p["timestamp"] = ts.dt.tz_convert("America/Toronto")
     p = p.sort_values("number").reset_index(drop=True)
     p["ivl_min"] = p["ivl_s"] / 60.0
     p = p[p["ivl_min"].notna() & (p["ivl_min"] > 0)].reset_index(drop=True)
@@ -99,7 +103,7 @@ def build_pace(df, n: int = 120):
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
                     font=dict(size=10)),
         margin=dict(t=20, b=40, l=60, r=20),
-        xaxis_title="block time", yaxis_title="minutes since previous block",
+        xaxis_title="block time (Toronto)", yaxis_title="minutes since previous block",
         yaxis=dict(range=[0, ymax]))
     fig.update_xaxes(showline=True, linecolor="black", mirror=True)
     fig.update_yaxes(showline=True, linecolor="black", mirror=True)
@@ -426,6 +430,9 @@ def build_tape(df):
     for col in ("open", "high", "low", "close", "volume"):
         m[col] = m[col].astype(float)
     m["ts"] = pd.to_datetime(m["ts"])
+    if m["ts"].dt.tz is None:
+        m["ts"] = m["ts"].dt.tz_localize("UTC")
+    m["ts"] = m["ts"].dt.tz_convert("America/Toronto")
     m = m.sort_values("ts").reset_index(drop=True)
     m = m[m["ts"] >= m["ts"].max() - pd.Timedelta(hours=24)]
     m = (m.set_index("ts")
