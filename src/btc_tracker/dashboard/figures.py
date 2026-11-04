@@ -152,7 +152,10 @@ def build_last_n(df, n: int = 10):
     if df is None or df.height == 0:
         raise ValueError("live_block_feed cache empty")
     a = df.tail(n).to_pandas()
-    a["timestamp"] = pd.to_datetime(a["timestamp"])
+    ts = pd.to_datetime(a["timestamp"])
+    if ts.dt.tz is None:
+        ts = ts.dt.tz_localize("UTC")
+    a["timestamp"] = ts
     a = a.sort_values("number").reset_index(drop=True)
     for col in ("tx_count", "inputs", "outputs", "value_btc", "fees_btc", "btc_usd"):
         a[col] = a[col].astype(float)
@@ -161,7 +164,7 @@ def build_last_n(df, n: int = 10):
     a["btc_usd"] = a["btc_usd"].ffill().bfill()
     if a["btc_usd"].isna().all():
         a["btc_usd"] = 0.0
-    a["label"] = a["timestamp"].dt.strftime("%H:%M")
+    a["label"] = a["timestamp"].dt.tz_convert("America/Toronto").dt.strftime("%H:%M")
     xs = a["number"].astype(int).tolist()
 
     def fmt(v):
@@ -196,7 +199,7 @@ def build_last_n(df, n: int = 10):
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1,
                     font=dict(size=10)),
         margin=dict(t=30, b=40, l=70, r=60),
-        xaxis_title="block time (UTC)", yaxis_title="BTC settled per block",
+        xaxis_title="block time (Toronto)", yaxis_title="BTC settled per block",
         yaxis=dict(range=[0, float(a["value_btc"].max()) * 1.55]),
         yaxis2=dict(title="BTC USD", overlaying="y", side="right", showgrid=False))
     fig.update_xaxes(showline=True, linecolor="black", mirror=True)
