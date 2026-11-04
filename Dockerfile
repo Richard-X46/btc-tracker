@@ -10,12 +10,6 @@ ENV PYTHONUNBUFFERED=1
 
 COPY pyproject.toml uv.lock ./
 
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
 RUN uv sync --frozen --no-install-project --no-dev
 
 COPY src/ src/

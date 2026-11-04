@@ -35,6 +35,12 @@ async def _prime():
     await refresh_weekly()
 
 
+async def _live_loop():
+    while True:
+        await asyncio.sleep(300)
+        await refresh_live()
+
+
 async def handle_tip(height, data):
     if height is not None:
         with logfire.span("tip.emit", height=height):
@@ -61,6 +67,7 @@ async def lifespan(app: FastAPI):
         logfire.configure(service_name="btc-trigger")
     apply_house_style()
     asyncio.create_task(_prime(), name="prime-all")
+    asyncio.create_task(_live_loop(), name="live-fallback")
     t = asyncio.create_task(listen_mempool(handle_tip), name="mempool-watcher")
     yield
     t.cancel()
