@@ -1,4 +1,4 @@
-{{ config(materialized='table') }}
+{{ config(materialized='table', tblproperties={'delta.enableDeletionVectors': 'false'}) }}
 
 with fee_stats as (
     select

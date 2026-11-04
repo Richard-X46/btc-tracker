@@ -1,0 +1,44 @@
+version: 2
+
+models:
+  - name: gold_daily_fee_metrics
+    columns:
+      - name: date
+        tests:
+          - not_null
+          - unique
+  - name: gold_daily_miner_revenue
+    columns:
+      - name: date
+        tests:
+          - not_null
+          - unique
+  - name: gold_daily_whale_activity
+    columns:
+      - name: date
+        tests:
+          - not_null
+          - unique
+  - name: gold_daily_block_intervals
+    columns:
+      - name: date
+        tests:
+          - not_null
+          - unique
+  - name: gold_daily_fee_tiers
+    columns:
+      - name: date
+        tests:
+          - not_null
+          - unique
+  - name: gold_weekly_fee_heatmap
+    columns:
+      - name: wk
+        tests:
+          - not_null
+      - name: hr
+        tests:
+          - not_null
+      - name: dow
+        tests:
+          - not_null

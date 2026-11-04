@@ -10,8 +10,8 @@ load_dotenv()
 gc.collect()
 
 spark = DatabricksSession.builder.remote(
-            host=os.getenv("DATABRICKS_HOST"),
-            token=os.getenv("DATABRICKS_TOKEN")).serverless(True).getOrCreate()
+            host=os.getenv("DATABRICKS_HOST",""),
+            token=os.getenv("DATABRICKS_TOKEN","")).serverless(True).getOrCreate()
 
 
 spark.sql( """
@@ -30,7 +30,6 @@ ALTER TABLE workspace.btc_data.blocks_source RECOVER PARTITIONS;
 
 
 
-spark.sql(block_source)
 spark.sql("""
 DROP TABLE IF EXISTS workspace.btc_data.tx_source
 """)
@@ -72,5 +71,3 @@ spark.sql(query)
 s3 = pafs.S3FileSystem(anonymous=True, region="us-east-2")
 dataset = ds.dataset("aws-public-blockchain/v1.0/btc/transactions/",
                      filesystem=s3, partitioning="hive")
-
-dataset.

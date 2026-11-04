@@ -152,6 +152,8 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+# Secrets - never commit
+*.share
 .env
 .venv
 env/

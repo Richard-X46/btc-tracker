@@ -4,26 +4,16 @@ resources:
       name: btc-blocks-incremental
       max_concurrent_runs: 1
       schedule:
-        quartz_cron_expression: 0 */10 * * * ?
+        quartz_cron_expression: 0 0 */3 * * ?
         timezone_id: "UTC"
-        pause_status: UNPAUSED
+        # No pause_status: bundle dev mode auto-pauses schedules, so a
       tasks:
-        # generous timeouts: serverless cold starts alone can take minutes
-        - task_key: merge_blocks
-          timeout_seconds: 900
+        # single task: tip gate + all three merges in one session, one cold start
+        - task_key: merges
+          timeout_seconds: 1500
           environment_key: default
           spark_python_task:
-            python_file: ../../src/btc_tracker/ingestion/delta_01_blocks.py
-        - task_key: merge_tx
-          timeout_seconds: 900
-          environment_key: default
-          spark_python_task:
-            python_file: ../../src/btc_tracker/ingestion/delta_02_transactions.py
-        - task_key: sync_price
-          timeout_seconds: 600
-          environment_key: default
-          spark_python_task:
-            python_file: ../../src/btc_tracker/ingestion/delta_03_btc_price.py
+            python_file: ../../src/btc_tracker/ingestion/pipeline_merges.py
 
       environments:
         - environment_key: default

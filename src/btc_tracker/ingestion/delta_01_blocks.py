@@ -10,7 +10,6 @@ from pydantic import BaseModel, Field, TypeAdapter
 import pyarrow.dataset as ds
 import pyarrow.fs as pafs
 
-
 load_dotenv()
 
 # =============// CONSTANTS //===============
@@ -77,8 +76,8 @@ def get_spark():
     else:  # local dev via Databricks Connect
         from databricks.connect import DatabricksSession
         spark = DatabricksSession.builder.remote(
-            host=os.getenv("DATABRICKS_HOST"),
-            token=os.getenv("DATABRICKS_TOKEN")
+            host=os.getenv("DATABRICKS_HOST","default"),
+            token=os.getenv("DATABRICKS_TOKEN","default")
         ).serverless(True).getOrCreate()
     return spark
 

@@ -7,4 +7,5 @@ sources:
     tables:
       - name: transactions
       - name: blocks
+      - name: price_minute
       

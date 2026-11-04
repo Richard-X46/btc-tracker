@@ -101,13 +101,13 @@ def check_columns(spark: Any) -> None:
 
 
 def main() -> None:
-    spark = get_spark()
+    spark: Any = get_spark()
     spark.conf.set("spark.sql.session.timeZone", TIMEZONE)
     for check in (check_tables, check_sizes, check_tips,
                   check_ranges, check_columns):
         try:
             check(spark)
-        except Exception as exc:  # noqa: BLE001 - keep going
+        except Exception as exc:  
             print(f"{check.__name__} FAILED: {exc}")
         print()
 
