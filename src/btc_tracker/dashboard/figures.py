@@ -45,6 +45,8 @@ def build_pace(df, n: int = 120):
     p = p[p["ivl_min"].notna() & (p["ivl_min"] > 0)].reset_index(drop=True)
     if p.empty:
         raise ValueError("no positive intervals yet")
+    for col in ("tx_count", "inputs", "outputs"):
+        p[col] = p[col].fillna(0)
     p["roll"] = p["ivl_min"].rolling(ROLL, min_periods=6).mean()
 
     n0 = int(p["number"].iloc[0])
@@ -154,6 +156,8 @@ def build_last_n(df, n: int = 10):
     a = a.sort_values("number").reset_index(drop=True)
     for col in ("tx_count", "inputs", "outputs", "value_btc", "fees_btc", "btc_usd"):
         a[col] = a[col].astype(float)
+    for col in ("tx_count", "inputs", "outputs", "value_btc", "fees_btc"):
+        a[col] = a[col].fillna(0.0)
     a["btc_usd"] = a["btc_usd"].ffill().bfill()
     if a["btc_usd"].isna().all():
         a["btc_usd"] = 0.0

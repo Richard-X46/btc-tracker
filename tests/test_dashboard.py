@@ -167,6 +167,15 @@ def test_pace_math():
     assert len(fig["data"][0]["x"]) == 29  # seed row has no interval
 
 
+def test_pace_null_tx_count():
+    df = _live()
+    df = df.with_columns(
+        pl.when(pl.col("number") == 1005).then(None).otherwise(pl.col("tx_count")).alias("tx_count")
+    )
+    fig = F.build_pace(df)
+    json.dumps(fig)
+
+
 def test_last_n_shape():
     fig = F.build_last_n(_live(), 10)
     json.dumps(fig)
