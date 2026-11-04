@@ -100,61 +100,61 @@
   </p>
 
   <!-- htmx: server-rendered partials, refreshed every 60s -->
-  <div class="card stats" hx-get="/partials/headline" hx-trigger="load, every 60s">
+  <div class="card stats" hx-get="partials/headline" hx-trigger="load, every 60s">
     loading headline…
   </div>
 
   <!-- alpine: fetch figure JSON, render with plotly, refresh every 60s -->
-  <div class="card" x-data="plotCard('/api/figures/pace')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/pace')" x-init="start()">
     <h3>Block pace</h3>
     <p class="caption">Minutes since the previous block. Dots outside the band are unusual.</p>
     <div class="plot" x-ref="plot">loading pace…</div>
     <template x-if="error"><p class="err" x-text="error"></p></template>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/last-blocks')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/last-blocks')" x-init="start()">
     <h3>Recent blocks</h3>
     <p class="caption">BTC settled per block with price. Last 10 blocks.</p>
     <div class="plot" x-ref="plot">loading blocks…</div>
     <template x-if="error"><p class="err" x-text="error"></p></template>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/tape')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/tape')" x-init="start()">
     <h3>Price action</h3>
     <p class="caption">Intraday candles with session VWAP and trend pair.</p>
     <div class="plot" x-ref="plot">loading tape…</div>
     <template x-if="error"><p class="err" x-text="error"></p></template>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/price')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/price')" x-init="start()">
     <h3>Price history</h3>
     <p class="caption">Daily close with trend pair. Landing on the last 6 months.</p>
     <div class="plot" x-ref="plot">loading price…</div>
     <template x-if="error"><p class="err" x-text="error"></p></template>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/fees')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/fees')" x-init="start()">
     <h3>Fee market</h3>
     <p class="caption">What transactions paid per byte of block space.</p>
     <div class="plot" x-ref="plot">loading fees…</div>
     <template x-if="error"><p class="err" x-text="error"></p></template>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/security')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/security')" x-init="start()">
     <h3>Security squeeze</h3>
     <p class="caption">Fee share of miner revenue against what users pay per transaction.</p>
     <div class="plot" x-ref="plot">loading security…</div>
     <template x-if="error"><p class="err" x-text="error"></p></template>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/whale')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/whale')" x-init="start()">
     <h3>Whale activity</h3>
     <p class="caption">Daily shark and whale transfers against price.</p>
     <div class="plot" x-ref="plot">loading whale…</div>
     <template x-if="error"><p class="err" x-text="error"></p></template>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/footprint')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/footprint')" x-init="start()">
     <h3>Whale footprint</h3>
     <p class="caption">Dispersal vs consolidation vs transfers against price.</p>
     <div class="plot" x-ref="plot">loading footprint…</div>
@@ -162,7 +162,7 @@
     <p class="source">Whale = over 100 BTC out. Consolidation gathers funds (many inputs, at most 2 outputs). Dispersal splits funds (over 2 outputs). Transfer is any other large move.</p>
   </div>
 
-  <div class="card" x-data="plotCard('/api/figures/heatmap')" x-init="start()">
+  <div class="card" x-data="plotCard('api/figures/heatmap')" x-init="start()">
     <h3>Cheapest hours</h3>
     <p class="caption">Median fee by hour and weekday. Time to transact when it is dark.</p>
     <div class="plot" style="height:340px" x-ref="plot">loading heatmap…</div>

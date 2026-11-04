@@ -9,19 +9,16 @@ description = "BTC at-a-glance dashboard for historical and real-time market con
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "altair>=6.3.0",
-    # dashboard runtime + shared job code (this is what the image ships)
-    "databricks-connect>=18.3.1",
-    "delta-sharing>=1.4.1",
+    # dashboard runtime (this is what the image ships)
+    "aiohttp>=3.10.0",
     "duckdb==1.5.6",
     "fastapi[standard]>=0.115.12",
     "httpx>=0.28.1",
-    "httpx2>=2.16.0",
     "logfire>=4.40.0",
     "pandas>=2.3.3",
     "plotly>=6.0.1",
+    "polars>=1.42.0",
     "pyarrow>=24.0.0",
-    "pyiceberg>=0.12.0",
     "python-dotenv>=1.1.0",
     "requests>=2.32.3",
     "websockets>=15.0.1",
@@ -32,8 +29,10 @@ dependencies = [
 # Excluded from the image via `uv sync --no-dev`.
 dev = [
     "boto3>=1.43.65",
+    "databricks-connect>=18.3.1",
     "dbt-databricks>=1.12.5",
     "deltalake>=1.6.3",
+    "delta-sharing>=1.4.1",
     "ipykernel>=7.3.0",
     "ipython>=9.15.0",
     "jupytext>=1.19.4",
@@ -41,7 +40,6 @@ dev = [
     "matplotlib>=3.10.3",
     "nbformat>=5.10.4",
     "numpy>=2.2.5",
-    "polars>=1.42.0",
     "psutil>=7.2.2",
     "pytest>=9.2.0",
     "yfinance>=0.2.58",
