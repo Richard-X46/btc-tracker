@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1
 
 COPY pyproject.toml uv.lock ./
 
-RUN uv sync --frozen --no-install-project --no-dev
+RUN uv sync --frozen --no-install-project --no-dev && rm -rf /root/.cache/uv
 
 COPY src/ src/
 
